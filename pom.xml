@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    StegoSign - Steganographic Watermarking and Verification Tool
+    Copyright (C) 2025  Ling Hsiung Yuan
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 2 of the License.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <https://www.gnu.org/licenses/old-licenses/gpl-2.0.html>.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ca.netartisan</groupId>
+    <artifactId>stegosign</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>stegosign</name>
+    <description>Steganographic watermarking and verification tool</description>
+    <packaging>jar</packaging>
+
+    <!-- GPL v2 license metadata for Maven Central and reports -->
+    <licenses>
+    <license>
+        <name>Apache License, Version 2.0</name>
+        <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        <distribution>repo</distribution>
+    </license>
+    </licenses>
+
+    <properties>
+        <license.header.java>${basedir}/src/APLv2_HEADER.java.txt</license.header.java>
+        <license.header.xml>${basedir}/src/APLv2_HEADER.xml.txt</license.header.xml>
+        <license.header.txt>${basedir}/src/APLv2_HEADER.txt</license.header.txt>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit5.version>5.9.3</junit5.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit5.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <!-- Include LICENSE file in the package -->
+            <resource>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>LICENSE</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.3.0</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.1.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.6.1</version>
+            </plugin>
+            <!-- License Management & Dependency Reports -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.6.0</version>
+                <configuration>
+                    <licenses>
+                        <license>
+                            <name>GNU General Public License, Version 2</name>
+                            <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
+                            <distribution>repo</distribution>
+                        </license>
+                    </licenses>
+                </configuration>
+            </plugin>
+
+            <!-- Enforce coding standard with spotless code formatter -->
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.46.1</version>
+                <configuration>
+                    <upToDateChecking>
+                        <enabled>false</enabled>
+                    </upToDateChecking>
+                    <java>
+                        <googleJavaFormat/>
+                        <licenseHeader>
+                            <file>${license.header.java}</file>
+                            <delimiter>^package.*;$</delimiter>
+                        </licenseHeader>
+                    </java>
+                    <formats>
+                        <format>
+                            <!-- define the files to apply to -->
+                            <includes>
+                                <include>.gitattributes</include>
+                                <include>.gitignore</include>
+                            </includes>
+                            <!-- define the steps to apply to those files -->
+                            <trimTrailingWhitespace />
+                            <endWithNewline />
+                        </format>
+                    </formats>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>enforce-coding-standard</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Create self-contained installer with jpackage plugin (configured with profiles
+            below) -->
+            <!--
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.7.0</version>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+    <!-- 🔹 OS-Specific Profiles -->
+    <profiles>
+        <!-- macOS: DMG -->
+        <profile>
+            <id>macos</id>
+            <activation>
+                <property>
+                    <name>os.detected.name</name>
+                    <value>osx</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <configuration>
+                            <type>dmg</type>
+                            <mainJar>${project.build.finalName}.jar</mainJar>
+                            <mainClass>com.example.app.Main</mainClass>
+                            <name>${project.artifactId}</name>
+                            <appVersion>${project.version}</appVersion>
+                            <vendor>Example Corp</vendor>
+                            <licenseFile>${project.basedir}/LICENSE</licenseFile>
+                            <destination>${project.build.directory}/installer</destination>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Windows: MSI -->
+        <profile>
+            <id>windows</id>
+            <activation>
+                <property>
+                    <name>os.detected.name</name>
+                    <value>windows</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <configuration>
+                            <type>msi</type>
+                            <mainJar>${project.build.finalName}.jar</mainJar>
+                            <mainClass>com.example.app.Main</mainClass>
+                            <name>${project.artifactId}</name>
+                            <appVersion>${project.version}</appVersion>
+                            <vendor>Example Corp</vendor>
+                            <licenseFile>${project.basedir}/LICENSE</licenseFile>
+                            <destination>${project.build.directory}/installer</destination>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Linux: DEB -->
+        <profile>
+            <id>linux</id>
+            <activation>
+                <property>
+                    <name>os.detected.name</name>
+                    <value>linux</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <configuration>
+                            <type>deb</type>
+                            <mainJar>${project.build.finalName}.jar</mainJar>
+                            <mainClass>com.example.app.Main</mainClass>
+                            <name>${project.artifactId}</name>
+                            <appVersion>${project.version}</appVersion>
+                            <vendor>Example Corp</vendor>
+                            <licenseFile>${project.basedir}/LICENSE</licenseFile>
+                            <destination>${project.build.directory}/installer</destination>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
