@@ -26,7 +26,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Test;
 
-public class WatermarkEmbedderTest {
+public class StegoSignEmbedderTest {
 
   // NOTE: put your test images into testdata/:
   // - input.png (or .jpg) : the carrier image
@@ -40,17 +40,17 @@ public class WatermarkEmbedderTest {
   @Test
   public void testWatermarkCreationAndDetectable() throws Exception {
     float strength = 0.08f; // you can tune: 0.04..0.12
-    WatermarkEmbedder.applyWatermark(input, watermark, output, strength);
+    StegoSignEmbedder.applyWatermark(input, watermark, output, strength);
     assertTrue(output.exists(), "Output file should have been created");
 
-    double score = WatermarkDetector.detectWatermark(output, watermark);
+    double score = StegoSignDetector.detectWatermark(output, watermark);
     assertTrue(score > 0.02, "Watermark should be detectable in output. Score: " + score);
   }
 
   @Test
   public void testResilienceAfterResize() throws Exception {
     float strength = 0.08f;
-    WatermarkEmbedder.applyWatermark(input, watermark, output, strength);
+    StegoSignEmbedder.applyWatermark(input, watermark, output, strength);
 
     // create resized (50%) version to simulate resizing
     BufferedImage out = ImageIO.read(output);
@@ -63,14 +63,14 @@ public class WatermarkEmbedderTest {
     g.dispose();
     ImageIO.write(small, "png", resized);
 
-    double score = WatermarkDetector.detectWatermark(resized, watermark);
+    double score = StegoSignDetector.detectWatermark(resized, watermark);
     assertTrue(score > 0.015, "Watermark should be detectable after resizing. Score: " + score);
   }
 
   @Test
   public void testResilienceAfterColorChange() throws Exception {
     float strength = 0.08f;
-    WatermarkEmbedder.applyWatermark(input, watermark, output, strength);
+    StegoSignEmbedder.applyWatermark(input, watermark, output, strength);
 
     BufferedImage out = ImageIO.read(output);
     // simulate color/contrast change (darker)
@@ -93,7 +93,7 @@ public class WatermarkEmbedderTest {
     }
     ImageIO.write(altered, "png", colorChanged);
 
-    double score = WatermarkDetector.detectWatermark(colorChanged, watermark);
+    double score = StegoSignDetector.detectWatermark(colorChanged, watermark);
     assertTrue(score > 0.015, "Watermark should be detectable after color change. Score: " + score);
   }
 

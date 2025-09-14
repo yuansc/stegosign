@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class WatermarkExtractor {
+public class StegoSignExtractor {
 
   /**
    * Extracts a visual watermark pattern from a suspect image given the original watermark image.

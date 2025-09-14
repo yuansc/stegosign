@@ -26,7 +26,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Test;
 
-public class WatermarkExtractorTest {
+public class StegoSignExtractorTest {
 
   private final File input = new File("testdata/input.png");
   private final File watermark = new File("testdata/watermark.png");
@@ -40,9 +40,9 @@ public class WatermarkExtractorTest {
   @Test
   public void testExtractFromOriginalWatermarkedImage() throws Exception {
     float strength = 0.08f;
-    WatermarkEmbedder.applyWatermark(input, watermark, output, strength);
+    StegoSignEmbedder.applyWatermark(input, watermark, output, strength);
 
-    WatermarkExtractor.extractWatermark(output, watermark, extracted);
+    StegoSignExtractor.extractWatermark(output, watermark, extracted);
     assertTrue(extracted.exists(), "Extracted watermark file should exist");
 
     BufferedImage exImg = ImageIO.read(extracted);
@@ -53,7 +53,7 @@ public class WatermarkExtractorTest {
   @Test
   public void testExtractAfterResize() throws Exception {
     float strength = 0.08f;
-    WatermarkEmbedder.applyWatermark(input, watermark, output, strength);
+    StegoSignEmbedder.applyWatermark(input, watermark, output, strength);
 
     // create resized version (50%)
     BufferedImage out = ImageIO.read(output);
@@ -66,7 +66,7 @@ public class WatermarkExtractorTest {
     g.dispose();
     ImageIO.write(small, "png", resized);
 
-    WatermarkExtractor.extractWatermark(resized, watermark, extractedResized);
+    StegoSignExtractor.extractWatermark(resized, watermark, extractedResized);
     assertTrue(extractedResized.exists(), "Extracted watermark from resized image should exist");
 
     BufferedImage exImg = ImageIO.read(extractedResized);
@@ -78,7 +78,7 @@ public class WatermarkExtractorTest {
   @Test
   public void testExtractAfterColorChange() throws Exception {
     float strength = 0.08f;
-    WatermarkEmbedder.applyWatermark(input, watermark, output, strength);
+    StegoSignEmbedder.applyWatermark(input, watermark, output, strength);
 
     BufferedImage out = ImageIO.read(output);
     BufferedImage altered =
@@ -99,7 +99,7 @@ public class WatermarkExtractorTest {
     }
     ImageIO.write(altered, "png", colorChanged);
 
-    WatermarkExtractor.extractWatermark(colorChanged, watermark, extractedColor);
+    StegoSignExtractor.extractWatermark(colorChanged, watermark, extractedColor);
     assertTrue(
         extractedColor.exists(), "Extracted watermark from color-changed image should exist");
 

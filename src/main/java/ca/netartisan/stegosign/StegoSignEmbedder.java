@@ -29,7 +29,7 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
-public class WatermarkEmbedder {
+public class StegoSignEmbedder {
 
   /**
    * Applies a redundant, multi-scale, luminance-based watermark derived from a handwriting image.

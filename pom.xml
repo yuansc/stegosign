@@ -28,11 +28,11 @@
 
     <!-- GPL v2 license metadata for Maven Central and reports -->
     <licenses>
-    <license>
-        <name>Apache License, Version 2.0</name>
-        <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-        <distribution>repo</distribution>
-    </license>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
 
     <properties>
@@ -105,6 +105,14 @@
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>ca.netartisan.stegosign.StegoSign</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>
@@ -129,11 +137,9 @@
                 <version>2.6.0</version>
                 <configuration>
                     <licenses>
-                        <license>
-                            <name>GNU General Public License, Version 2</name>
-                            <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
-                            <distribution>repo</distribution>
-                        </license>
+                        <name>Apache License, Version 2.0</name>
+                        <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+                        <distribution>repo</distribution>
                     </licenses>
                 </configuration>
             </plugin>
@@ -148,7 +154,7 @@
                         <enabled>false</enabled>
                     </upToDateChecking>
                     <java>
-                        <googleJavaFormat/>
+                        <googleJavaFormat />
                         <licenseHeader>
                             <file>${license.header.java}</file>
                             <delimiter>^package.*;$</delimiter>
@@ -209,7 +215,7 @@
                         <configuration>
                             <type>dmg</type>
                             <mainJar>${project.build.finalName}.jar</mainJar>
-                            <mainClass>com.example.app.Main</mainClass>
+                            <mainClass>ca.netartisan.stegosign.StegoSign</mainClass>
                             <name>${project.artifactId}</name>
                             <appVersion>${project.version}</appVersion>
                             <vendor>Example Corp</vendor>
@@ -238,7 +244,7 @@
                         <configuration>
                             <type>msi</type>
                             <mainJar>${project.build.finalName}.jar</mainJar>
-                            <mainClass>com.example.app.Main</mainClass>
+                            <mainClass>ca.netartisan.stegosign.StegoSign</mainClass>
                             <name>${project.artifactId}</name>
                             <appVersion>${project.version}</appVersion>
                             <vendor>Example Corp</vendor>
@@ -267,7 +273,7 @@
                         <configuration>
                             <type>deb</type>
                             <mainJar>${project.build.finalName}.jar</mainJar>
-                            <mainClass>com.example.app.Main</mainClass>
+                            <mainClass>ca.netartisan.stegosign.StegoSign</mainClass>
                             <name>${project.artifactId}</name>
                             <appVersion>${project.version}</appVersion>
                             <vendor>Example Corp</vendor>

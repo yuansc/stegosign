@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class WatermarkDetector {
+public class StegoSignDetector {
 
   /**
    * Returns a correlation score (higher = stronger evidence watermark present). Use same scales as

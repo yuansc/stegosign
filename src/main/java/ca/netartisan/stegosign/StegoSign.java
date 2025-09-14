@@ -20,7 +20,7 @@ package ca.netartisan.stegosign;
 
 import java.io.File;
 
-public class WatermarkTool {
+public class StegoSign {
 
   public static void main(String[] args) throws Exception {
     if (args.length < 1) {
@@ -33,10 +33,11 @@ public class WatermarkTool {
       case "embed":
         // existing pixel-domain embed (unchanged)
         if (args.length < 5) {
-          System.err.println("Usage: embed <inputImage> <watermarkImage> <outputImage> <strength>");
+          System.err.println(
+              "Usage: embed <inputImage> <watermarkImage> <outputImage> <strength> (e.g. 0.08)");
           return;
         }
-        WatermarkEmbedder.applyWatermark(
+        StegoSignEmbedder.applyWatermark(
             new File(args[1]), new File(args[2]), new File(args[3]), Float.parseFloat(args[4]));
         System.out.println("Embedded (pixel) -> " + args[3]);
         break;
@@ -47,7 +48,7 @@ public class WatermarkTool {
           System.err.println("Usage: detect <suspectImage> <watermarkImage>");
           return;
         }
-        double s = WatermarkDetector.detectWatermark(new File(args[1]), new File(args[2]));
+        double s = StegoSignDetector.detectWatermark(new File(args[1]), new File(args[2]));
         System.out.printf("Detection score: %.5f%n", s);
         break;
 
@@ -57,7 +58,7 @@ public class WatermarkTool {
               "Usage: extract <suspectImage> <watermarkImage> <outputExtractedImage>");
           return;
         }
-        WatermarkExtractor.extractWatermark(
+        StegoSignExtractor.extractWatermark(
             new File(args[1]), new File(args[2]), new File(args[3]));
         System.out.println("Extracted (pixel) -> " + args[3]);
         break;
@@ -70,7 +71,7 @@ public class WatermarkTool {
 
   private static void printUsage() {
     System.out.println("Usage:");
-    System.out.println("  embed <input> <watermark> <out> <strength>");
+    System.out.println("  embed <input> <watermark> <out> <strength> (e.g. 0.08)");
     System.out.println("  detect <suspect> <watermark>");
     System.out.println("  extract <suspect> <watermark> <out>");
   }
