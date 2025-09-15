@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ca.netartisan</groupId>
     <artifactId>stegosign</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>stegosign</name>
     <description>Steganographic watermarking and verification tool</description>
     <packaging>jar</packaging>
