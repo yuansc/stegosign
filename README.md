@@ -4,4 +4,4 @@ A steganographic watermarking and verification tool built with Java and Maven. S
 
 ## License
 
-This project is licensed under the GNU General Public License v2. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0.  See the http://www.apache.org/licenses/LICENSE-2.0 for details.
